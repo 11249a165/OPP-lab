@@ -19,4 +19,5 @@ int main()
     calc.add(99,24);
     calc.add(24,50,72);
     return 0;    
+
 }
