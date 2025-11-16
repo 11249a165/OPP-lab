@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+class Student {
+ string name;
+ int roll;
+ int marks[5];
+ static int count;
+public:
+ Student(string n, int r, int m[]) {
+ name = n; roll = r;
+ for(int i=0;i<5;i++) marks[i]=m[i];
+ count++;
+ }
+~Student() {
+ cout << "Destructor called for " << name << endl;
+ }
+ inline int totalMarks() {
+ int t=0;
+ for(int i=0;i<5;i++) t+=marks[i];
+ return t;
+ }
+ string getName() { return name; }
+ static void showCount() {
+ cout << "Total Students: " << count << endl;
+ }
+};
+int Student::count=0;
+void printGrade(Student s){
+ int total=s.totalMarks();
+ cout<<s.getName()<<" Grade: ";
+ if(total>=450) cout<<"A+"<<endl;
+ else if(total>=400) cout<<"A"<<endl;
+ else if(total>=350) cout<<"B"<<endl;
+ else cout<<"C"<<endl;
+}
+Student topper(Student s[],int n){
+ int maxT=s[0].totalMarks(); int index=0;
+ for(int i=1;i<n;i++)
+ if(s[i].totalMarks()>maxT){maxT=s[i].totalMarks(); index=i;}
+ return s[index];
+}
+int main(){
+ int m1[5]={90,85,80,95,88};
+ int m2[5]={75,70,80,72,68};
+ int m3[5]={95,92,90,94,93};
+ Student s[3]={Student("Ravi",101,m1),
+ Student("Sita",102,m2),
+Student("Anu",103,m3)};
+ for(int i=0;i<3;i++)
+ printGrade(s[i]);
+ Student top=topper(s,3);
+ cout<<"Topper: "<<top.getName()<<endl;
+ Student::showCount();
+ return 0;
+}
+
